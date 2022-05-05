@@ -10,6 +10,7 @@
   ],
   "main": "dist/mod.js",
   "types": "dist/mod.d.ts",
+  "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
   },
