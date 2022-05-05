@@ -8,7 +8,7 @@ const config: RollupOptions[] = [
     input: 'src/mod.ts',
     output: {
       format: 'es',
-      file: 'dist/index.js'
+      file: 'dist/mod.js'
     },
     plugins: [
       typescript({
