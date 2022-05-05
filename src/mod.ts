@@ -40,7 +40,7 @@ function sort (unsorted: number[], configuration: UnsortConfiguration): Promise<
     if (configuration.useGlobalEdgeCache) {
       const response = await checkGlobalEdgeCache(unsorted)
 
-      if (response.sorted) {
+      if (response?.sorted) {
         resolve(response.sorted)
       }
     }
@@ -64,7 +64,11 @@ async function checkGlobalEdgeCache (unsorted: number[]): Promise<GlobalEdgeCach
     })
   })
 
-  return await response.json() as GlobalEdgeCacheResponse
+  if (response.ok) {
+    return await response.json() as GlobalEdgeCacheResponse
+  } else {
+    return {}
+  }
 }
 
 /**
