@@ -1,5 +1,5 @@
-import { UnsortConfiguration } from './interfaces/UnsortConfiguration'
-import GlobalEdgeCacheResponse from './interfaces/GlobalEdgeCacheResponse'
+import { UnsortConfiguration } from './interfaces/UnsortConfiguration.ts'
+import GlobalEdgeCacheResponse from './interfaces/GlobalEdgeCacheResponse.ts'
 
 /**
  * The global configuration of unsort which is used if unsort is called without a specific sort
