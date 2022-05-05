@@ -21,6 +21,24 @@ describe.concurrent('unsort without global cache', () => {
     const sorted = await unsort([200,1,3000], { useGlobalEdgeCache: false })
     assert.deepEqual(sorted, [1,200,3000])
   })
+
+  it('100 random numbers between 1 and 1000', async () => {
+    const unsorted = []
+    for (let i = 0; i < 100; i++) {
+      unsorted.push(Math.floor(Math.random() * 1000))
+    }
+    const sorted = await unsort(unsorted, { useGlobalEdgeCache: false })
+    assert.deepEqual(sorted, unsorted.sort((a,b) => a - b))
+  })
+
+  it('100 random numbers between 1 and 10000', async () => {
+    const unsorted = []
+    for (let i = 0; i < 100; i++) {
+      unsorted.push(Math.floor(Math.random() * 10000))
+    }
+    const sorted = await unsort(unsorted, { useGlobalEdgeCache: false })
+    assert.deepEqual(sorted, unsorted.sort((a,b) => a - b))
+  }, 12000)
 })
 
 describe.concurrent('unsort with global cache', () => {
@@ -43,4 +61,22 @@ describe.concurrent('unsort with global cache', () => {
     const sorted = await unsort([200,1,3000])
     assert.deepEqual(sorted, [1,200,3000])
   })
+
+  it('100 random numbers between 1 and 1000', async () => {
+    const unsorted = []
+    for (let i = 0; i < 100; i++) {
+      unsorted.push(Math.floor(Math.random() * 1000))
+    }
+    const sorted = await unsort(unsorted)
+    assert.deepEqual(sorted, unsorted.sort((a,b) => a - b))
+  })
+
+  it('100 random numbers between 1 and 10000', async () => {
+    const unsorted = []
+    for (let i = 0; i < 100; i++) {
+      unsorted.push(Math.floor(Math.random() * 10000))
+    }
+    const sorted = await unsort(unsorted)
+    assert.deepEqual(sorted, unsorted.sort((a,b) => a - b))
+  }, 12000)
 })
