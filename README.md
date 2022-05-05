@@ -1,3 +1,2 @@
 # unsort
-A slow and inefficient sorting library for numbers with a global cache on the edge. 
-
+An unreliable and overall unusable sorting library for numbers with a global cache on the edge.
