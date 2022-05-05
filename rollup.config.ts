@@ -6,10 +6,16 @@ import del from 'rollup-plugin-delete'
 const config: RollupOptions[] = [
   {
     input: 'src/mod.ts',
-    output: {
-      format: 'es',
-      file: 'dist/mod.js'
-    },
+    output: [
+      {
+        format: 'cjs',
+        file: 'dist/mod.js'
+      },
+      {
+        format: 'es',
+        file: 'dist/mod.es.js'
+      }
+    ],
     plugins: [
       typescript({
         sourceMap: false,
