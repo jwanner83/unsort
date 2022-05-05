@@ -21,7 +21,7 @@ export function updateGlobalUnsortConfiguration (configuration: UnsortConfigurat
  * @param unsorted the unsorted array to sort
  * @param configuration the unsort configuration
  */
-export async function unsort (unsorted: number[], configuration?: UnsortConfiguration): Promise<number[]> {
+export function unsort (unsorted: number[], configuration?: UnsortConfiguration): Promise<number[]> {
   return sort(unsorted, configuration ?? globalConfiguration)
 }
 
@@ -66,7 +66,7 @@ async function checkGlobalEdgeCache (unsorted: number[]): Promise<GlobalEdgeCach
  * Sort the array locally and return the sorted array
  * @param unsorted
  */
-async function sortLocally (unsorted: number[]): Promise<number[]> {
+function sortLocally (unsorted: number[]): Promise<number[]> {
   return new Promise(async (resolve) => {
     const sorted: number[] = []
 
