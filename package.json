@@ -1,6 +1,8 @@
 {
   "name": "unsort",
-  "version": "1.0.0",
+  "description": "An unreliable and overall unusable sorting library for numbers with a global cache on the edge.",
+  "keywords": ["sorting", "edge", "global-cache"],
+  "version": "1.0.0-rc0",
   "files": [
     "dist/mod.js",
     "dist/mod.d.ts"
@@ -8,8 +10,7 @@
   "main": "dist/mod.js",
   "types": "dist/mod.d.ts",
   "engines": {
-    "node": ">=18.0.0",
-    "deno": "1.0.0"
+    "node": ">=18.0.0"
   },
   "scripts": {
     "build": "rollup -c --configPlugin rollup-plugin-esbuild",
