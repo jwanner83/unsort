@@ -2,9 +2,10 @@
   "name": "unsort",
   "description": "An unreliable and overall unusable sorting library for numbers with a global cache on the edge.",
   "keywords": ["sorting", "edge", "global-cache"],
-  "version": "1.0.0-rc0",
+  "version": "1.0.0-rc1",
   "files": [
     "dist/mod.js",
+    "dist/mod.es.js",
     "dist/mod.d.ts"
   ],
   "main": "dist/mod.js",
