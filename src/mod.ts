@@ -1,5 +1,10 @@
-import { UnsortConfiguration } from './interfaces/UnsortConfiguration.ts'
-import GlobalEdgeCacheResponse from './interfaces/GlobalEdgeCacheResponse.ts'
+import { UnsortConfiguration } from './interfaces/UnsortConfiguration'
+import GlobalEdgeCacheResponse from './interfaces/GlobalEdgeCacheResponse'
+
+/**
+ * public api key for the global edge cache function
+ */
+const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2bnBidXB0Z2lneWxxZXV4eW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTE2NjcwMTMsImV4cCI6MTk2NzI0MzAxM30.gvTuy828d3HRZshNqx5HmRISCqfcB7PvHOl6iHsL8O8'
 
 /**
  * The global configuration of unsort which is used if unsort is called without a specific sort
@@ -52,7 +57,7 @@ async function checkGlobalEdgeCache (unsorted: number[]): Promise<GlobalEdgeCach
   const response = await fetch('https://yvnpbuptgigylqeuxyng.functions.supabase.co/unsort-global-edge-cache', {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2bnBidXB0Z2lneWxxZXV4eW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTE2NjcwMTMsImV4cCI6MTk2NzI0MzAxM30.gvTuy828d3HRZshNqx5HmRISCqfcB7PvHOl6iHsL8O8'
+      'Authorization': `Bearer ${key}`
     },
     body: JSON.stringify({
       unsorted
