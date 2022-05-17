@@ -9,12 +9,13 @@ await build({
   outDir: "./.npm",
   packageManager: "pnpm",
   shims: {},
+  test: false,
   package: {
     name: "unsort",
     description:
       "An unreliable and overall unusable sorting library for numbers with a global cache on the edge.",
     keywords: ["sorting", "edge", "global-cache"],
-    version: "1.0.0-rc1",
+    version: "1.0.0-rc2",
     license: "MIT",
     repository: {
       type: "git",
