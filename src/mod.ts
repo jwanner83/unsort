@@ -1,10 +1,11 @@
-import { UnsortConfiguration } from './interfaces/UnsortConfiguration'
 import GlobalEdgeCacheResponse from './interfaces/GlobalEdgeCacheResponse'
+import { UnsortConfiguration } from './interfaces/UnsortConfiguration'
 
 /**
  * public api key for the global edge cache function
  */
-const key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2bnBidXB0Z2lneWxxZXV4eW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTE2NjcwMTMsImV4cCI6MTk2NzI0MzAxM30.gvTuy828d3HRZshNqx5HmRISCqfcB7PvHOl6iHsL8O8'
+const key =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2bnBidXB0Z2lneWxxZXV4eW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTE2NjcwMTMsImV4cCI6MTk2NzI0MzAxM30.gvTuy828d3HRZshNqx5HmRISCqfcB7PvHOl6iHsL8O8'
 
 /**
  * The global configuration of unsort which is used if unsort is called without a specific sort
@@ -17,7 +18,9 @@ let globalConfiguration: UnsortConfiguration = {
  * Update the global configuration of unsort
  * @param configuration
  */
-export function updateGlobalUnsortConfiguration (configuration: UnsortConfiguration) {
+export function updateGlobalUnsortConfiguration(
+  configuration: UnsortConfiguration
+) {
   globalConfiguration = { ...globalConfiguration, ...configuration }
 }
 
@@ -26,7 +29,10 @@ export function updateGlobalUnsortConfiguration (configuration: UnsortConfigurat
  * @param unsorted the unsorted array to sort
  * @param configuration the unsort configuration
  */
-export function unsort (unsorted: number[], configuration?: UnsortConfiguration): Promise<number[]> {
+export function unsort(
+  unsorted: number[],
+  configuration?: UnsortConfiguration
+): Promise<number[]> {
   return sort(unsorted, configuration ?? globalConfiguration)
 }
 
@@ -35,7 +41,10 @@ export function unsort (unsorted: number[], configuration?: UnsortConfiguration)
  * @param unsorted
  * @param configuration
  */
-function sort (unsorted: number[], configuration: UnsortConfiguration): Promise<number[]> {
+function sort(
+  unsorted: number[],
+  configuration: UnsortConfiguration
+): Promise<number[]> {
   return new Promise(async (resolve) => {
     if (configuration.useGlobalEdgeCache) {
       const response = await checkGlobalEdgeCache(unsorted)
@@ -53,19 +62,24 @@ function sort (unsorted: number[], configuration: UnsortConfiguration): Promise<
  * Check the global edge cache and return its response
  * @param unsorted
  */
-async function checkGlobalEdgeCache (unsorted: number[]): Promise<GlobalEdgeCacheResponse> {
-  const response = await fetch('https://yvnpbuptgigylqeuxyng.functions.supabase.co/unsort-global-edge-cache', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${key}`
-    },
-    body: JSON.stringify({
-      unsorted
-    })
-  })
+async function checkGlobalEdgeCache(
+  unsorted: number[]
+): Promise<GlobalEdgeCacheResponse> {
+  const response = await fetch(
+    'https://yvnpbuptgigylqeuxyng.functions.supabase.co/unsort-global-edge-cache',
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${key}`
+      },
+      body: JSON.stringify({
+        unsorted
+      })
+    }
+  )
 
   if (response.ok) {
-    return await response.json() as GlobalEdgeCacheResponse
+    return (await response.json()) as GlobalEdgeCacheResponse
   } else {
     return {}
   }
@@ -75,7 +89,7 @@ async function checkGlobalEdgeCache (unsorted: number[]): Promise<GlobalEdgeCach
  * Sort the array locally and return the sorted array
  * @param unsorted
  */
-function sortLocally (unsorted: number[]): Promise<number[]> {
+function sortLocally(unsorted: number[]): Promise<number[]> {
   return new Promise(async (resolve) => {
     const sorted: number[] = []
 

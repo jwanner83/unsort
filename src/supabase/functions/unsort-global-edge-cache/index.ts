@@ -1,8 +1,8 @@
-import { serve } from 'https://deno.land/std@0.131.0/http/server.ts'
-import { unsort } from '../../../mod.ts'
-import GlobalEdgeCacheResponse from '../../../interfaces/GlobalEdgeCacheResponse.ts'
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@^1.33.2'
 import { PostgrestResponse } from 'https://cdn.esm.sh/v78/@supabase/postgrest-js@0.37.2/dist/module/lib/types.d.ts'
+import { serve } from 'https://deno.land/std@0.131.0/http/server.ts'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@^1.33.2'
+import GlobalEdgeCacheResponse from '../../../interfaces/GlobalEdgeCacheResponse.ts'
+import { unsort } from '../../../mod.ts'
 import { CacheDatabaseResponse } from './interfaces/CacheDatabaseResponse.ts'
 import { CacheHitResponse } from './interfaces/CacheHitResponse.ts'
 
@@ -46,14 +46,11 @@ serve(async (request) => {
 }).then()
 
 function respond(data: GlobalEdgeCacheResponse): Response {
-  return new Response(
-    JSON.stringify(data),
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      }
+  return new Response(JSON.stringify(data), {
+    headers: {
+      'Content-Type': 'application/json'
     }
-  )
+  })
 }
 
 /**
@@ -74,7 +71,10 @@ function validateInput(unsorted: number[]): string {
  * @param unsorted
  */
 async function resolveCacheHit(unsorted: number[]): Promise<CacheHitResponse> {
-  const response: PostgrestResponse<CacheDatabaseResponse> = await supabase.from('cache').select('sorted').eq('unsorted', `{${unsorted.toString()}}`)
+  const response: PostgrestResponse<CacheDatabaseResponse> = await supabase
+    .from('cache')
+    .select('sorted')
+    .eq('unsorted', `{${unsorted.toString()}}`)
 
   if (response.error || response.data.length === 0) {
     return {
@@ -94,7 +94,5 @@ async function resolveCacheHit(unsorted: number[]): Promise<CacheHitResponse> {
  * @param sorted
  */
 async function saveToCache(unsorted: number[], sorted: number[]) {
-  await supabase.from('cache').insert([
-    { unsorted, sorted }
-  ])
+  await supabase.from('cache').insert([{ unsorted, sorted }])
 }

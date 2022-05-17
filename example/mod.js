@@ -1,6 +1,6 @@
 import { unsort } from 'unsort'
 
-(async () => {
+;(async () => {
   const unsorted = []
   for (let i = 0; i < 20; i++) {
     unsorted.push(Math.floor(Math.random() * 1000))

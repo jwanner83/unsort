@@ -13,8 +13,5 @@
     "declaration": true,
     "declarationDir": "dts"
   },
-  "include": [
-    "src/mod.ts",
-    "src/interfaces/*"
-  ]
+  "include": ["src/mod.ts", "src/interfaces/*"]
 }

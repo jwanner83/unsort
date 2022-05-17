@@ -1,7 +1,7 @@
-import { RollupOptions } from 'rollup'
 import typescript from '@rollup/plugin-typescript'
-import dts from 'rollup-plugin-dts'
+import { RollupOptions } from 'rollup'
 import del from 'rollup-plugin-delete'
+import dts from 'rollup-plugin-dts'
 
 const config: RollupOptions[] = [
   {
@@ -28,10 +28,7 @@ const config: RollupOptions[] = [
     output: {
       file: 'dist/mod.d.ts'
     },
-    plugins: [
-      dts(),
-      del({ targets: ['dist/dts'], hook: 'buildEnd' })
-    ]
+    plugins: [dts(), del({ targets: ['dist/dts'], hook: 'buildEnd' })]
   }
 ]
 
