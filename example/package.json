@@ -1,7 +1,0 @@
-{
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "unsort": "^1.0.0-rc1"
-  }
-}
