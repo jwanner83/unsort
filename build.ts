@@ -1,4 +1,4 @@
-import { build, emptyDir } from "https://deno.land/x/dnt/mod.ts";
+import { build, emptyDir } from "https://deno.land/x/dnt@0.23.0/mod.ts";
 
 await emptyDir("./.npm");
 await emptyDir("./.npm/docs");
@@ -8,7 +8,10 @@ await build({
   entryPoints: ["./package/mod.ts"],
   outDir: "./.npm",
   packageManager: "pnpm",
-  shims: {},
+  shims: {
+    undici: true
+  },
+  typeCheck: false,
   test: false,
   package: {
     name: "unsort",
