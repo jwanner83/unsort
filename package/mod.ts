@@ -1,27 +1,27 @@
-import GlobalEdgeCacheResponse from './interfaces/GlobalEdgeCacheResponse'
-import { UnsortConfiguration } from './interfaces/UnsortConfiguration'
+import GlobalEdgeCacheResponse from "./interfaces/GlobalEdgeCacheResponse.ts";
+import { UnsortConfiguration } from "./interfaces/UnsortConfiguration.ts";
 
 /**
  * public api key for the global edge cache function
  */
 const key =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2bnBidXB0Z2lneWxxZXV4eW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTE2NjcwMTMsImV4cCI6MTk2NzI0MzAxM30.gvTuy828d3HRZshNqx5HmRISCqfcB7PvHOl6iHsL8O8'
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2bnBidXB0Z2lneWxxZXV4eW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTE2NjcwMTMsImV4cCI6MTk2NzI0MzAxM30.gvTuy828d3HRZshNqx5HmRISCqfcB7PvHOl6iHsL8O8";
 
 /**
  * The global configuration of unsort which is used if unsort is called without a specific sort
  */
 let globalConfiguration: UnsortConfiguration = {
-  useGlobalEdgeCache: true
-}
+  useGlobalEdgeCache: true,
+};
 
 /**
  * Update the global configuration of unsort
  * @param configuration
  */
 export function updateGlobalUnsortConfiguration(
-  configuration: UnsortConfiguration
+  configuration: UnsortConfiguration,
 ) {
-  globalConfiguration = { ...globalConfiguration, ...configuration }
+  globalConfiguration = { ...globalConfiguration, ...configuration };
 }
 
 /**
@@ -31,9 +31,9 @@ export function updateGlobalUnsortConfiguration(
  */
 export function unsort(
   unsorted: number[],
-  configuration?: UnsortConfiguration
+  configuration?: UnsortConfiguration,
 ): Promise<number[]> {
-  return sort(unsorted, configuration ?? globalConfiguration)
+  return sort(unsorted, configuration ?? globalConfiguration);
 }
 
 /**
@@ -43,19 +43,19 @@ export function unsort(
  */
 function sort(
   unsorted: number[],
-  configuration: UnsortConfiguration
+  configuration: UnsortConfiguration,
 ): Promise<number[]> {
   return new Promise(async (resolve) => {
     if (configuration.useGlobalEdgeCache) {
-      const response = await checkGlobalEdgeCache(unsorted)
+      const response = await checkGlobalEdgeCache(unsorted);
 
       if (response?.sorted) {
-        resolve(response.sorted)
+        resolve(response.sorted);
       }
     }
 
-    resolve(await sortLocally(unsorted))
-  })
+    resolve(await sortLocally(unsorted));
+  });
 }
 
 /**
@@ -63,25 +63,25 @@ function sort(
  * @param unsorted
  */
 async function checkGlobalEdgeCache(
-  unsorted: number[]
+  unsorted: number[],
 ): Promise<GlobalEdgeCacheResponse> {
   const response = await fetch(
-    'https://yvnpbuptgigylqeuxyng.functions.supabase.co/unsort-global-edge-cache',
+    "https://yvnpbuptgigylqeuxyng.functions.supabase.co/unsort-global-edge-cache",
     {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Authorization: `Bearer ${key}`
+        Authorization: `Bearer ${key}`,
       },
       body: JSON.stringify({
-        unsorted
-      })
-    }
-  )
+        unsorted,
+      }),
+    },
+  );
 
   if (response.ok) {
-    return (await response.json()) as GlobalEdgeCacheResponse
+    return (await response.json()) as GlobalEdgeCacheResponse;
   } else {
-    return {}
+    return {};
   }
 }
 
@@ -91,18 +91,18 @@ async function checkGlobalEdgeCache(
  */
 function sortLocally(unsorted: number[]): Promise<number[]> {
   return new Promise(async (resolve) => {
-    const sorted: number[] = []
+    const sorted: number[] = [];
 
     const sortTimeoutHandler = (number: number) => {
-      sorted.push(number)
+      sorted.push(number);
 
       if (sorted.length === unsorted.length) {
-        resolve(sorted)
+        resolve(sorted);
       }
-    }
+    };
 
     for (const number of unsorted) {
-      setTimeout(() => sortTimeoutHandler(number), number)
+      setTimeout(() => sortTimeoutHandler(number), number);
     }
-  })
+  });
 }
