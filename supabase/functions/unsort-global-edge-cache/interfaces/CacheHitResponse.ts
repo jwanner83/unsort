@@ -2,10 +2,10 @@ export interface CacheHitResponse {
   /**
    * If the cache had a hit
    */
-  hit: boolean
+  hit: boolean;
 
   /**
    * The sorted array from the cache
    */
-  sorted?: number[]
+  sorted?: number[];
 }
