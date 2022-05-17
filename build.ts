@@ -18,7 +18,7 @@ await build({
     description:
       "An unreliable and overall unusable sorting library for numbers with a global cache on the edge.",
     keywords: ["sorting", "edge", "global-cache"],
-    version: "1.0.0-rc2",
+    version: "1.0.0-rc3",
     license: "MIT",
     repository: {
       type: "git",
