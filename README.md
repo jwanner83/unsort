@@ -62,32 +62,37 @@ edge. Then it would take approximately `500ms`.
 
 ## drawbacks
 
-[Because of the spec](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#reasons_for_delays_longer_than_specified)
+[Because of the spec](https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timers)
 of `setTimeout`, values beneath `4` will, at least sometimes, not be correctly
-sorted. Node.js 18 will do its best to handle these cases, but it will fail
+sorted. The runtime will do its best to handle these cases, but it will fail
 sometimes.
-
-## requirements
-
-This library requires Node.js Version >= 18.0.0
 
 ## usage
 
 Don't. But if you really want, here you go.
 
-### basic
+### import
 
-1. Install it with `pnpm`: `pnpm i unsort`
+#### deno
+
+1. Import it `import { unsort } from 'https://esm.sh/unsort'`
+2. Profit.
+
+#### node
+
+1. Install it `pnpm i unsort`
 2. Import it `import { unsort } from 'unsort'`
 3. Profit.
+
+### code
 
 ```ts
 const sorted = await unsort([300, 100, 200]); // results in [100, 200, 300] - hopefully
 ```
 
-### options
+#### options
 
-#### set global options
+##### set global options
 
 ```ts
 import { updateGlobalUnsortConfiguration } from "unsort";
@@ -97,10 +102,36 @@ updateGlobalUnsortConfiguration({
 });
 ```
 
-#### set options for single call
+##### set options for single call
 
 ```ts
 const sorted = await unsort([300, 100, 200], {
   useGlobalEdgeCache: false,
 });
 ```
+
+## development
+
+This package is a deno package which is built with
+[`dnt`](https://github.com/denoland/dnt) to be able to use it in Node.js.
+
+It also contains a supabase edge function which is inside of the supabase
+folder. The code there is deno as well, because supabase edge functions are
+built with deno as well.
+
+### commands
+
+#### build package
+
+To build the package to a node compatible one, run `deno run -A build.ts` from
+the repository root.
+
+#### build edge function
+
+The edge function is built with the supabase cli. run
+`supabase functions deploy unsort-global-edge-cache` from the repository root to
+deploy a new version of the edge function to the supabase instance.
+
+#### format
+
+To format the code, run the deno formatter `deno fmt` from the project root.
