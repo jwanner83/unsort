@@ -7,6 +7,14 @@ import { CacheDatabaseResponse } from "./interfaces/CacheDatabaseResponse.ts";
 import { CacheHitResponse } from "./interfaces/CacheHitResponse.ts";
 
 /**
+ * The cors headers
+ */
+const cors = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey',
+}
+
+/**
  * The supabase client
  */
 export const supabase = createClient(
@@ -18,6 +26,11 @@ export const supabase = createClient(
  * The entry function which gets called as soon as the edge function gets called
  */
 serve(async (request: Request) => {
+  // if is invoked in browser environment
+  if (request.method === 'OPTIONS') {
+    return new Response('ok', { headers: cors })
+  }
+
   const { unsorted } = await request.json();
   const data: GlobalEdgeCacheResponse = {};
 
@@ -48,7 +61,8 @@ serve(async (request: Request) => {
 function respond(data: GlobalEdgeCacheResponse): Response {
   return new Response(JSON.stringify(data), {
     headers: {
-      "Content-Type": "application/json",
+      ...cors,
+      "Content-Type": "application/json"
     },
   });
 }
